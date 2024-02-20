@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  devcontainer:
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - ../:/workspaces/devcontainer:cached
+    networks:
+      - dev-net
+    command: sleep infinity
+
+  db:
+    container_name: postgres-db
+    hostname: pg_db
+    image: postgres:latest
+    restart: always
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    networks:
+      - dev-net
+
+volumes:
+  postgres-data:
+  postgres-another-data:
+
+networks:
+  dev-net:
